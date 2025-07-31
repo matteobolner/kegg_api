@@ -26,7 +26,7 @@ def get_pathways_list(organism, get_pathway_file=False):
 
 
 def save_pathway_list(organism="hsa", outfile="all_pathways.txt"):
-    pathway_dict, pathways = get_all_pathways(organism, get_pathway_file=True)
+    pathway_dict, pathways = get_pathways_list(organism, get_pathway_file=True)
     with open(outfile, "w") as f:
         f.write(pathways)
     print(f"Saved to {outfile}")
