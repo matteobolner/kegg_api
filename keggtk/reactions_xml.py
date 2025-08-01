@@ -4,7 +4,7 @@ import requests
 
 
 def get_reactions_from_pathway(pathway_id):
-    url = "https://rest.kegg.jp/get/hsa00600/kgml"
+    url = f"https://rest.kegg.jp/get/{pathway_id}/kgml"
     data = requests.get(url)
     tree = ET.ElementTree(ET.fromstring(data.text))
     root = tree.getroot()
