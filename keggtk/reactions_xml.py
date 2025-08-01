@@ -10,8 +10,6 @@ def get_reactions_from_pathway(pathway_id):
     root = tree.getroot()
 
     entries = root.findall("entry")
-    reaction_entries = root.findall("reaction")
-
     genes = []
     for e in entries:
         if e.get("type") == "gene":
@@ -27,7 +25,7 @@ def get_reactions_from_pathway(pathway_id):
     genes = genes.explode("gene")
     genes = genes.drop_duplicates()
     # genes = genes[genes["reaction"].notna()]
-
+    reaction_entries = root.findall("reaction")
     reactions = []
 
     for r in reaction_entries:
@@ -41,9 +39,12 @@ def get_reactions_from_pathway(pathway_id):
         reactions.append(reaction)
 
     reactions = pd.DataFrame(reactions)
-    reactions["reaction"] = reactions["reaction"].str.split(" ")
-    reactions = reactions.explode("reaction")
-    reactions = reactions.drop_duplicates()
+    if len(reactions) > 0:
+        reactions["reaction"] = reactions["reaction"].str.split(" ")
+        reactions = reactions.explode("reaction")
+        reactions = reactions.drop_duplicates()
 
-    df = reactions.merge(genes, on="reaction", how="outer")
-    return df
+        df = reactions.merge(genes, on="reaction", how="outer")
+        return df
+    else:
+        return genes
