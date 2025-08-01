@@ -1,3 +1,4 @@
+import time
 import requests
 from keggtk.parsing import parse_sections
 
@@ -14,6 +15,7 @@ def get_multiple_genes_text(gene_ids):
             i: j for i, j in zip(gene_ids[i : i + 10], genes.split("///\n\n"))
         }
         all_genes_dict.update(genes_dict)
+        time.sleep(2.5)
 
     return all_genes_dict
 
