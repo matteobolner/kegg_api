@@ -55,5 +55,5 @@ def save_all_pathways(organism, outdir="pathways"):
             with open(f"{outdir}/{j}.txt", "w") as f:
                 f.write(tempdict[j])
                 print(j)
-        time.sleep(5)
+        time.sleep(1)
     print("Saved all pathways to : ", outdir)

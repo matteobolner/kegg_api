@@ -1,4 +1,3 @@
-import time
 import requests
 from keggtk.parsing import parse_sections
 from tqdm import tqdm
@@ -9,15 +8,18 @@ def get_multiple_genes_text(gene_ids):
     all_genes_dict = {}
     gene_ids = list(set(gene_ids))
     # split in groups of 10 for API limits
-    for i in tqdm(range(0, len(gene_ids), 10)):
-        current_url = url + "+".join(gene_ids[i : i + 10])
+    for gene_batch_indices in tqdm(range(0, len(gene_ids), 10)):
+        current_url = url + "+".join(
+            gene_ids[gene_batch_indices : gene_batch_indices + 10]
+        )
+        gene_batch_names = gene_ids[gene_batch_indices : gene_batch_indices + 10]
         genes = requests.get(current_url).text
+
         genes_dict = {
-            gene_ids[i]: j for i, j in zip(gene_ids[i : i + 10], genes.split("///\n\n"))
+            name: gene_text
+            for name, gene_text in zip(gene_batch_names, genes.split("///\n\n"))
         }
         all_genes_dict.update(genes_dict)
-        time.sleep(2.5)
-
     return all_genes_dict
 
 
