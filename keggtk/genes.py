@@ -13,7 +13,7 @@ def get_multiple_genes_text(gene_ids):
         current_url = url + "+".join(gene_ids[i : i + 10])
         genes = requests.get(current_url).text
         genes_dict = {
-            i: j for i, j in zip(gene_ids[i : i + 10], genes.split("///\n\n"))
+            gene_ids[i]: j for i, j in zip(gene_ids[i : i + 10], genes.split("///\n\n"))
         }
         all_genes_dict.update(genes_dict)
         time.sleep(2.5)
