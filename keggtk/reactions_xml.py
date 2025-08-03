@@ -33,7 +33,7 @@ def get_reactions_from_pathway(pathway_id):
         reaction["reaction"] = r.get("name")
         reaction["type"] = r.get("type")
         substrate = r.find("substrate").get("name")
-        product = r.find("substrate").get("name")
+        product = r.find("product").get("name")
         reaction["substrate"] = substrate
         reaction["product"] = product
         reactions.append(reaction)
