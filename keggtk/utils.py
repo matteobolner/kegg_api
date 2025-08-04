@@ -1,5 +1,15 @@
 import requests
 from tqdm import tqdm
+import pandas as pd
+import io
+
+
+def list_db_ids(database, organism=""):
+    url = f"http://rest.kegg.jp/list/{database}/" + organism
+    data = requests.get(url)
+    data = data.text
+    df = pd.read_table(io.StringIO(data.rstrip("\n")), header=None)
+    return df
 
 
 def download_multiple_ids_text(ids):
