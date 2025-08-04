@@ -49,4 +49,9 @@ def get_reactions_from_pathway(pathway_id):
         df = reactions.merge(genes, on="reaction", how="outer")
         return df
     else:
+        genes["reaction"] = None
+        genes["type"] = None
+        genes["substrate"] = None
+        genes["product"] = None
+        genes = genes[["reaction", "type", "substrate", "product", "gene"]]
         return genes
