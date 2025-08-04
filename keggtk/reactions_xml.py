@@ -41,6 +41,10 @@ def get_reactions_from_pathway(pathway_id):
     if len(reactions) > 0:
         reactions["reaction"] = reactions["reaction"].str.split(" ")
         reactions = reactions.explode("reaction")
+        reactions["substrate"] = reactions["substrate"].str.split(" ")
+        reactions = reactions.explode("substrate")
+        reactions["product"] = reactions["product"].str.split(" ")
+        reactions = reactions.explode("product")
         reactions = reactions.drop_duplicates()
         df = reactions.merge(genes, on="reaction", how="outer")
         return df
